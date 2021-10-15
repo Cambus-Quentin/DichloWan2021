@@ -10,4 +10,4 @@ Enceignant : Bernard Tourancheau, UGA
 ## Liens
 [FabMSTIC](./FabMSTIC.md)
 
-[Explication du projet]()
+[Explication du projet](./DetailProjet.md)
