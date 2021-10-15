@@ -7,7 +7,12 @@ Le groupe de projet :
 
 Enceignant : Bernard Tourancheau, UGA
 
-## Liens
-[FabMSTIC](./FabMSTIC.md)
+Ce projet consiste en la mise en place d'un réseau de capteur de dichlorométhane utilisant le réseau LoRaWAN
+([*plus de détails ici*](docs/DetailProjet.md)).
 
-[Explication du projet](./DetailProjet.md)
+## [Documentation](docs/README.md) 
+
+## [Code source des capteurs](capteur/README.md)
+
+## [Code source de notre application](app/README.md)
+
