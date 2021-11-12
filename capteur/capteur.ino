@@ -2,7 +2,8 @@
 
 #define DEV_EUI "E24F43FFFE44CE14"
 #define APP_EUI "EC96EF9AA9DF9ED8"
-#define APP_KEY "E24F43FFFE44CE14EC96EF9AA9DF9ED8"
+//#define APP_KEY "E24F43FFFE44CE14EC96EF9AA9DF9ED8"
+#define APP_KEY "04cc542e811e9134be8735ca991c932e"
 
 //#define FPORT UNCONFIRMED
 #define FPORT 1
@@ -23,7 +24,7 @@ void setup(){
 }
 
 void loop(){
-  char frame[4];
+  char frame[5];
   floatToByte(getCaptorValue(), frame);
   send(frame);
   delay(FRAME_DELAY);
@@ -40,10 +41,13 @@ void blink(int nb){
 
 void joinNetwork(void){
   digitalWrite(LED_BUILTIN, HIGH);
+
+  // Enable the USI module and set the radio band.
   while(!loraNode.begin(&SerialLora, LORA_BAND_EU_868)) {
     delay(1000);
   }
   
+  // Send a join request and wait the join accept
   while(!loraNode.joinOTAA(APP_KEY, APP_EUI)) {
     delay(1000);
   }
@@ -71,10 +75,11 @@ float getCaptorValue(void){
   return sensorVolt;
 }
 
-void floatToByte(float value, char bytes[4]){
+void floatToByte(float value, char bytes[5]){
   //bytes[0] = (value >> 24) & 0xFF;
   //bytes[1] = (value >> 16) & 0xFF;
   //bytes[2] = (value >> 8) & 0xFF;
   //bytes[3] = value & 0xFF;
   memcpy(bytes, (unsigned char*) (&value), 4);
+  bytes[4] = '\0';
 }
