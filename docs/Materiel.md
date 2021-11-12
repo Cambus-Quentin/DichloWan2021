@@ -8,10 +8,9 @@ Pour le preuve de concept nous allons utiliser des capteurs de gaz : **MQ2** et 
 
 # Mise en place
 
-## Capteur MQ-5
-
 ![](./assets/nucleo_L073RZ.jpg)
 
+## Capteur MQ-5
 |Broche capteur|PIN STM32|
 |---|---|
 |VCC (Volt Courant Continue) - alimentation|CN7 18|
