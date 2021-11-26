@@ -25,7 +25,7 @@ void setup(){
 
 void loop(){
   char frame[4];
-  //floatToByte(getCaptorValue(), frame);
+  //floatToByte(getSensorVolt(), frame);
   intToByte(getSensorValue(), frame);
   send(frame);
   delay(FRAME_DELAY);
@@ -66,7 +66,7 @@ void send(char frame[]){
   }
 }
 
-float getCaptorValue(void){
+float getSensorVolt(void){
   int sensorValue = analogRead(PIN_CAPTOR);
   float sensorVolt=(float)sensorValue/1024*5.0;
 
