@@ -3,10 +3,10 @@
 #define DEV_EUI "E24F43FFFE44CE14"
 #define APP_EUI "EC96EF9AA9DF9ED8"
 //#define APP_KEY "E24F43FFFE44CE14EC96EF9AA9DF9ED8"
-#define APP_KEY "04cc542e811e9134be8735ca991c932e"
+#define APP_KEY "DDFEC930AEB17C7599C825725AE74609"
 
-//#define FPORT UNCONFIRMED
-#define FPORT 1
+#define FPORT UNCONFIRMED
+//#define FPORT 1
 
 #define FRAME_DELAY 10000  // in ms
 
@@ -24,8 +24,9 @@ void setup(){
 }
 
 void loop(){
-  char frame[5];
-  floatToByte(getCaptorValue(), frame);
+  char frame[4];
+  //floatToByte(getCaptorValue(), frame);
+  intToByte(getSensorValue(), frame);
   send(frame);
   delay(FRAME_DELAY);
 }
@@ -41,13 +42,10 @@ void blink(int nb){
 
 void joinNetwork(void){
   digitalWrite(LED_BUILTIN, HIGH);
-
-  // Enable the USI module and set the radio band.
   while(!loraNode.begin(&SerialLora, LORA_BAND_EU_868)) {
     delay(1000);
   }
   
-  // Send a join request and wait the join accept
   while(!loraNode.joinOTAA(APP_KEY, APP_EUI)) {
     delay(1000);
   }
@@ -75,11 +73,18 @@ float getCaptorValue(void){
   return sensorVolt;
 }
 
-void floatToByte(float value, char bytes[5]){
+void floatToByte(float value, char bytes[4]){
   //bytes[0] = (value >> 24) & 0xFF;
   //bytes[1] = (value >> 16) & 0xFF;
   //bytes[2] = (value >> 8) & 0xFF;
   //bytes[3] = value & 0xFF;
   memcpy(bytes, (unsigned char*) (&value), 4);
-  bytes[4] = '\0';
+}
+
+int getSensorValue(void) {
+  return analogRead(PIN_CAPTOR);
+}
+
+void intToByte(int value, char bytes[4]){
+  memcpy(bytes, (unsigned char*) (&value), 4);
 }
