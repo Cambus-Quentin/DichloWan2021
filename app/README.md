@@ -1,3 +1,14 @@
 > [Home](../README.md)
 
-# Code source de l'application
+# Backend - API REST
+
+Technologie : 
+- Spring Boot
+- Maven
+
+Lancer l'application :
+```console
+foo@bar:backend$ mvn run
+```
+
+API Swagger : http://localhost:8080/api
