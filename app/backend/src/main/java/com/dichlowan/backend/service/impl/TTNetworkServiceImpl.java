@@ -50,9 +50,13 @@ public class TTNetworkServiceImpl implements NetworkService {
     }
 
     private ArrayList<UplinkDTO> parser(String response) {
+        ArrayList<UplinkDTO> uplinks = new ArrayList<>();
+
+        if (response == null)
+            return uplinks;
+
         response = "[" + response.replace("\n{", ",\n{") + "]";
 
-        ArrayList<UplinkDTO> uplinks = new ArrayList<>();
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode[] data = objectMapper.readValue(response, JsonNode[].class);
@@ -80,7 +84,6 @@ public class TTNetworkServiceImpl implements NetworkService {
     }
 
     public ArrayList<UplinkDTO> getAllUplink() {
-        logger.debug(TTN_API);
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
