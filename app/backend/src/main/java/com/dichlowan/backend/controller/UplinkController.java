@@ -56,7 +56,7 @@ public class UplinkController {
         return uplinkRepository.findAll();
     }
 
-    @GetMapping("scrap")
+    @GetMapping("/scrape")
     public void scrap(){
         ttnScrapperBatch.scrap();
     }
