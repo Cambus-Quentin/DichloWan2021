@@ -32,6 +32,10 @@ Board part number : Nucleo L073RZ
 Upload method : Mass Storage  
 Port : /dev/ttyACM0
 
+### With Makefile
+
+https://openocd.org
+
 
 ### Réseau de capteur
 

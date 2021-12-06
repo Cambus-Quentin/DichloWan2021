@@ -8,6 +8,10 @@ Technologie :
 
 Lancer l'application :
 ```console
+foo@bar:backend$ mvn spring-boot:run
+```
+
+```console
 foo@bar:backend$ mvn run
 ```
 
