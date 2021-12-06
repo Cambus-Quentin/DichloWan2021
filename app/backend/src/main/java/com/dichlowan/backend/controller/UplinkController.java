@@ -1,6 +1,8 @@
 package com.dichlowan.backend.controller;
 
-import com.dichlowan.backend.dto.UplinkDTO;
+import com.dichlowan.backend.batch.TTNScrapperBatch;
+import com.dichlowan.backend.model.UplinkModel;
+import com.dichlowan.backend.repository.UplinkRepository;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,14 +22,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1/uplink")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UplinkController {
     private static final Logger logger = LoggerFactory.getLogger(UplinkController.class);
 
     @Autowired
     NetworkService networkService;
+
+    @Autowired
+    UplinkRepository uplinkRepository;
+
+    @Autowired
+    TTNScrapperBatch ttnScrapperBatch;
 
     @GetMapping
     @Operation(
@@ -42,10 +52,13 @@ public class UplinkController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = String.class)
             ))
-    @CrossOrigin(origins = "http://localhost:3000")
-    public ArrayList<UplinkDTO> getAllUplink(){
-        ArrayList<UplinkDTO> res = networkService.getAllUplink();
-        return res;
+    public List<UplinkModel> getAllUplink(){
+        return uplinkRepository.findAll();
+    }
+
+    @GetMapping("scrap")
+    public void scrap(){
+        ttnScrapperBatch.scrap();
     }
 
     @GetMapping(value="/device")

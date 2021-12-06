@@ -1,17 +1,27 @@
-package com.dichlowan.backend.dto;
+package com.dichlowan.backend.model;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.Date;
 
-public class UplinkDTO {
-    private String networkOrigin;
+@Document
+public class UplinkModel {
+    @Id
+    @JsonIgnore
+    public String id;
 
-    private String deviceId;
+    public String networkOrigin;
 
-    private LocalDateTime receivedAt;
+    public String deviceId;
 
-    private int value;
+    public Date receivedAt;
 
-    public UplinkDTO(String networkOrigin, String deviceId, LocalDateTime receiveAt, int value) {
+    public int value;
+
+    public UplinkModel(){}
+
+    public UplinkModel(String networkOrigin, String deviceId, Date receiveAt, int value) {
         this.setNetworkOrigin(networkOrigin);
         this.setDeviceId(deviceId);
         this.setReceivedAt(receiveAt);
@@ -34,11 +44,11 @@ public class UplinkDTO {
         this.deviceId = deviceId;
     }
 
-    public LocalDateTime getReceivedAt() {
+    public Date getReceivedAt() {
         return receivedAt;
     }
 
-    public void setReceivedAt(LocalDateTime receivedAt) {
+    public void setReceivedAt(Date receivedAt) {
         this.receivedAt = receivedAt;
     }
 
