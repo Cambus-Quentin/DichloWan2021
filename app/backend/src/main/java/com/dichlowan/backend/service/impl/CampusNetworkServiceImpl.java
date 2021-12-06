@@ -9,6 +9,7 @@ import com.dichlowan.backend.exception.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,7 +17,7 @@ public class CampusNetworkServiceImpl implements NetworkService {
 
     private static final Logger logger = LoggerFactory.getLogger(CampusNetworkServiceImpl.class);
 
-    public List<UplinkModel> getAllUplink() {
+    public List<UplinkModel> getAllUplink(Date after) {
         throw new NotImplementedException("The Campus IoT network is not yet supported");
     }
 

@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +38,13 @@ public class TTNetworkServiceImpl implements NetworkService {
     private String APP_ID;
 
     private static final Logger logger = LoggerFactory.getLogger(TTNetworkServiceImpl.class);
+
+    private DateFormat dateFormat;
+
+    public TTNetworkServiceImpl() {
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 
     @PostConstruct
     public void postConstruct() {
@@ -71,8 +76,6 @@ public class TTNetworkServiceImpl implements NetworkService {
                 String devideId = node.get("result").get("end_device_ids").get("device_id").asText();
                 String receivedAt = node.get("result").get("received_at").asText();
 
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                 Date date = dateFormat.parse(receivedAt);
 
                 JsonNode bytesNode = node.get("result").get("uplink_message").get("decoded_payload").get("bytes");
@@ -80,6 +83,7 @@ public class TTNetworkServiceImpl implements NetworkService {
                 for (int i = 0; i < 4; i++) {
                     int b = bytesNode.get(i).asInt();
                     bytes[3-i] = (new Integer(b)).byteValue();
+                    // bytes[3-i] = Byte.valueOf(bytesNode.get(i).asText());
                 }
 
                 int value = this.fromByteArray(bytes);
@@ -93,7 +97,7 @@ public class TTNetworkServiceImpl implements NetworkService {
         return uplinks;
     }
 
-    public List<UplinkModel> getAllUplink() {
+    public List<UplinkModel> getAllUplink(Date after) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -101,8 +105,12 @@ public class TTNetworkServiceImpl implements NetworkService {
         HttpEntity httpEntity = new HttpEntity(headers);
 
         StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append("after=2021-11-25T00:00:00Z");
-        // strBuilder.append("&limit=10");
+        if (after != null) {
+            strBuilder.append("after="+ dateFormat.format(after)+"Z");
+        }
+
+        //strBuilder.append("&limit=10");
+
         strBuilder.append("&field_mask=up.uplink_message.decoded_payload");
 
         String url = TTN_API + "as/applications/" + APP_ID + "/packages/storage/uplink_message" + "?" + strBuilder.toString();

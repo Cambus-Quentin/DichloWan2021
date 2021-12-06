@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,16 +22,21 @@ public class TTNScrapperBatch {
     UplinkRepository uplinkRepository;
 
     public void scrap() {
-        List<UplinkModel> uplinks = networkService.getAllUplink();
+        Date after = uplinkRepository.findLastDate();
+        // not rescrape the data at the given date
+        // 1000 ms
+        after.setTime(after.getTime()+1000);
+
+        List<UplinkModel> uplinks = networkService.getAllUplink(after);
 
         if (uplinks.size() == 0){
-            logger.info("No newest data to scrape");
+            logger.info("No newest data to scrape - after " + after);
 
             return;
         }
 
         uplinkRepository.saveAll(uplinks);
 
-        logger.info("New data have been scraped");
+        logger.info("New data have been scraped - after " + after);
     }
 }
