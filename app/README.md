@@ -10,12 +10,13 @@
 - frontend
     - React
 
-# Lancer l'application
+# Lancer l'application en développement
 
 - step 1: Lancer la base donnée
 ```console
 foo@bar:docker$ docker-compose up
 ```
+L'envionnement docker comprend une base de données MongoDB et un serveur SMTP de développement.
 
 - step 2 : Lancer l'application
 ```console
@@ -24,12 +25,15 @@ foo@bar:backend$ mvn spring-boot:run
 
 - step 3 : Lancer l'interface
 ```console
+foo@bar:frontend$ npm install
 foo@bar:frontend$ npm start
 ```
 
 App : http://localhost:3000
 
 API Swagger : http://localhost:8080/api
+
+Mail : http://localhost:1080
 
 # Choix du réseau de capteur
 

@@ -1,15 +1,14 @@
 > [Home](../README.md)
 
-# Documentation 
-[Explication du projet](DetailProjet.md)
+# Documentation Lora
 
-[Matériel](Materiel.md)
-- [Mise en place](Materiel.md#mise-en-place)
-
-[Get Started](GetStarted.md)
-- [Installation](GetStarted.md#installation)
-- [Exemple de programme pour les capteurs](GetStarted.md#exemple)
-- [Network configuration](./Network.md)
+[Get Started]()
+- [Matériel](Materiel.md)
+    + [Mise en place](Materiel.md#mise-en-place)
+- [Lora](LoraEnvironment.md)
+    + [Installation](LoraEnvironment.md#installation)
+    + [Exemple de programme pour les capteurs](LoraEnvironment.md#exemple)
+- [Réseau IoT](./Network.md)
 
 ## Liens
 [FabMSTIC](FabMSTIC.md)

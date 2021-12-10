@@ -1,6 +1,6 @@
 > [Home](../README.md) > [Documentation](./README.md)
 
-# Get Started
+# Lora Environnement
 
 ## Installation
 
