@@ -6,6 +6,8 @@ Pour la base du projet nous avons besoin d'une carte supportant le protocole LoR
 
 Pour le preuve de concept nous allons utiliser des capteurs de gaz : **MQ2** et **MQ5**.
 
+**Pensez à étalonner les capteurs**
+
 # Mise en place
 
 ![](./assets/nucleo_L073RZ.jpg)
