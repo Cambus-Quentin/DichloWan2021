@@ -1,8 +1,8 @@
 package com.dichlowan.backend.controller;
 
-import com.dichlowan.backend.batch.TTNScrapperBatch;
 import com.dichlowan.backend.model.UplinkModel;
 import com.dichlowan.backend.repository.UplinkRepository;
+import com.dichlowan.backend.service.ScrapperService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,7 +21,6 @@ import com.dichlowan.backend.service.NetworkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,7 +36,7 @@ public class UplinkController {
     UplinkRepository uplinkRepository;
 
     @Autowired
-    TTNScrapperBatch ttnScrapperBatch;
+    ScrapperService scrapperService;
 
     @GetMapping
     @Operation(
@@ -58,7 +57,7 @@ public class UplinkController {
 
     @GetMapping("/scrape")
     public void scrap(){
-        ttnScrapperBatch.scrap();
+        scrapperService.scrap();
     }
 
     @GetMapping(value="/device")
