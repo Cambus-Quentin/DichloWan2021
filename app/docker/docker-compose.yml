@@ -2,7 +2,16 @@ version: "3.9"
 services:
   api-database:
     image: mongo:3.2.4
-    container_name: "api-database"
+    container_name: "dichlowan-db"
     ports:
       - 27017:27017
     command: --smallfiles
+  smpt-mail-server:
+    # https://github.com/maildev/maildev
+    image: maildev/maildev
+    container_name: "dichlowan-mail-serv"
+    command: bin/maildev --web 80 --smtp 25 --incoming-user dichlowan --incoming-pass dichlowan
+    ports:
+      - 1080:80
+      - 1025:25
+

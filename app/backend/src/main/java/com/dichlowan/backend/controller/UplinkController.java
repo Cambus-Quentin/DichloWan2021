@@ -2,6 +2,7 @@ package com.dichlowan.backend.controller;
 
 import com.dichlowan.backend.model.UplinkModel;
 import com.dichlowan.backend.repository.UplinkRepository;
+import com.dichlowan.backend.service.EmailService;
 import com.dichlowan.backend.service.ScrapperService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +37,7 @@ public class UplinkController {
     UplinkRepository uplinkRepository;
 
     @Autowired
-    ScrapperService scrapperService;
+    EmailService emailService;
 
     @GetMapping
     @Operation(
@@ -55,9 +56,9 @@ public class UplinkController {
         return uplinkRepository.findAll();
     }
 
-    @GetMapping("/scrape")
-    public void scrap(){
-        scrapperService.scrap();
+    @GetMapping("/send")
+    public void sendMail(){
+        emailService.sendAlert();
     }
 
     @GetMapping(value="/device")
