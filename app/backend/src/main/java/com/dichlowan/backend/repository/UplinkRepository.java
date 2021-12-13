@@ -13,6 +13,7 @@ import java.util.List;
 @Component
 public interface UplinkRepository extends MongoRepository<UplinkModel,String> {
 
+    @Aggregation(pipeline = { "{ $sort: { receivedAt: 1} }"})
     public List<UplinkModel> findAll();
 
     @Aggregation(pipeline = { "{$match: {receivedAt: {$gte: {$date: \"?0\"},$lt: {$date: \"?1\"}}}}" })
