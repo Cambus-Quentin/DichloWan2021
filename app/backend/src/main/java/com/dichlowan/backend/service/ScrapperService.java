@@ -22,14 +22,22 @@ public class ScrapperService {
 
     public void scrap() {
         Date after = uplinkRepository.findLastDate();
-        // not rescrape the data at the given date
-        // 1000 ms
-        after.setTime(after.getTime()+1000);
+
+        // after is null if no data into DB
+        if (after != null){
+            // not rescrape the data at the given date
+            // 1000 ms
+            after.setTime(after.getTime()+1000);
+        }
 
         List<UplinkModel> uplinks = networkService.getAllUplink(after);
 
         if (uplinks.size() == 0){
-            logger.info("No newest data to scrape - after " + after);
+            if (after != null) {
+                logger.info("No newest data to scrape - after " + after);
+            } else {
+                logger.info("No newest data to scrape");
+            }
 
             return;
         }

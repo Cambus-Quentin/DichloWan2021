@@ -1,11 +1,25 @@
 version: "3.9"
 services:
   api-database:
-    image: mongo:3.2.4
+    image: mongo:5.0
     container_name: "dichlowan-db"
     ports:
       - 27017:27017
-    command: --smallfiles
+    volumes: 
+      - ./data:/data/db
+    networks: 
+      - mongo-compose-network
+  mongo-express:
+    image: mongo-express
+    container_name: "dichlowan-db-ui"
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: dichlowan-db
+    depends_on:
+      - api-database
+    networks: 
+      - mongo-compose-network 
   smpt-mail-server:
     # https://github.com/maildev/maildev
     image: maildev/maildev
@@ -15,3 +29,6 @@ services:
       - 1080:80
       - 1025:25
 
+networks:
+  mongo-compose-network:
+    driver: bridge

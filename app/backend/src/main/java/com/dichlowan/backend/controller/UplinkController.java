@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,11 @@ import com.dichlowan.backend.service.NetworkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping(value = "/v1/uplink")
@@ -39,6 +44,12 @@ public class UplinkController {
     @Autowired
     EmailService emailService;
 
+    @GetMapping("/fake")
+    public void insertFakeData() {
+        UplinkModel up = new UplinkModel("FakeData", "FakeDevice", new Date(), 0);
+        uplinkRepository.save(up);
+    }
+
     @GetMapping
     @Operation(
             summary = "Get all uplink",
@@ -54,6 +65,35 @@ public class UplinkController {
             ))
     public List<UplinkModel> getAllUplink(){
         return uplinkRepository.findAll();
+    }
+
+    @GetMapping("/date")
+    public List<UplinkModel> getFromDate(
+            @RequestParam(value="a", required = true)
+            @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+                    Date after,
+            @RequestParam(value="b", required = true)
+            @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+                    Date before
+    ) {
+        logger.debug(after.toString());
+        logger.debug(before.toString());
+
+        return uplinkRepository.findBetween(after, before);
+
+        /*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            Date after = dateFormat.parse("2021-12-06T08:04:08Z");
+            Date before = dateFormat.parse("2021-12-06T08:05:24Z");
+
+            return uplinkRepository.findBetween(after, before);
+        }catch (Exception e){
+            logger.debug(e.getMessage());
+            logger.debug(e.getLocalizedMessage());
+        }
+
+        return null;*/
     }
 
     @GetMapping("/send")
