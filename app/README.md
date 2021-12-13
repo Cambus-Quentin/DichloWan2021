@@ -28,6 +28,11 @@ foo@bar:backend$ mvn spring-boot:run
 foo@bar:frontend$ npm install
 foo@bar:frontend$ npm start
 ```
+- step 4 : Importer des données enregistrés (format JSON)
+```console
+foo@bar:docker$ docker cp fake_data_uplinkModel.json dichlowan-db:/tmp/fake_data_uplinkModel.json
+foo@bar:docker$ docker exec dichlowan-db mongoimport -d dichlowan -c uplinkModel --jsonArray --file /tmp/fake_data_uplinkModel.json
+```
 
 App : http://localhost:3000
 
