@@ -41,15 +41,6 @@ public class UplinkController {
     @Autowired
     UplinkRepository uplinkRepository;
 
-    @Autowired
-    EmailService emailService;
-
-    @GetMapping("/fake")
-    public void insertFakeData() {
-        UplinkModel up = new UplinkModel("FakeData", "FakeDevice", new Date(), 0);
-        uplinkRepository.save(up);
-    }
-
     @GetMapping
     @Operation(
             summary = "Get all uplink",
@@ -68,6 +59,18 @@ public class UplinkController {
     }
 
     @GetMapping("/date")
+    @Operation(
+            summary = "Get uplink between 2 date",
+            description="get uplink between 2 dates : after the first one and before the second one -> pattern('yyyy-MM-dd'T'HH:mm:ssZ')")
+    @ApiResponse(
+            responseCode = "200")
+    @ApiResponse(
+            responseCode = "500",
+            description = "Internal Error",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = String.class)
+            ))
     public List<UplinkModel> getFromDate(
             @RequestParam(value="a", required = true)
             @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
@@ -76,29 +79,8 @@ public class UplinkController {
             @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
                     Date before
     ) {
-        logger.debug(after.toString());
-        logger.debug(before.toString());
 
         return uplinkRepository.findBetween(after, before);
-
-        /*DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        try {
-            Date after = dateFormat.parse("2021-12-06T08:04:08Z");
-            Date before = dateFormat.parse("2021-12-06T08:05:24Z");
-
-            return uplinkRepository.findBetween(after, before);
-        }catch (Exception e){
-            logger.debug(e.getMessage());
-            logger.debug(e.getLocalizedMessage());
-        }
-
-        return null;*/
-    }
-
-    @GetMapping("/send")
-    public void sendMail(){
-        emailService.sendAlert();
     }
 
     @GetMapping(value="/device")

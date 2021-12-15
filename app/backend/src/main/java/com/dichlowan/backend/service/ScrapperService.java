@@ -20,6 +20,9 @@ public class ScrapperService {
     @Autowired
     UplinkRepository uplinkRepository;
 
+    @Autowired
+    EmailService emailService;
+
     public void scrap() {
         Date after = uplinkRepository.findLastDate();
 
@@ -31,6 +34,9 @@ public class ScrapperService {
         }
 
         List<UplinkModel> uplinks = networkService.getAllUplink(after);
+
+        // CHANGE POSITION INTO FUNCTION
+        emailService.sendAlert();
 
         if (uplinks.size() == 0){
             if (after != null) {
