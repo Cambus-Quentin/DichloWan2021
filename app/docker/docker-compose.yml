@@ -4,7 +4,7 @@ services:
     image: mongo:5.0
     container_name: "dichlowan-db"
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes: 
       - ./data:/data/db
     # networks: 
@@ -26,8 +26,8 @@ services:
     container_name: "dichlowan-mail-serv"
     command: bin/maildev --web 80 --smtp 25 --incoming-user dichlowan --incoming-pass dichlowan
     ports:
-      - 1080:80
-      - 1025:25
+      - "1080:80"
+      - "1025:25"
 
 # networks:
 #   mongo-compose-network:
