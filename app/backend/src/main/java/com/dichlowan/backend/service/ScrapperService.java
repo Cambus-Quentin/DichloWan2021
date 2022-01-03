@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.mail.MailSendException;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,13 @@ public class ScrapperService {
         List<UplinkModel> uplinks = networkService.getAllUplink(after);
 
         // CHANGE POSITION INTO FUNCTION
-        emailService.sendAlert();
+        try {
+            emailService.sendAlert();
+        }catch(MailSendException e) {
+            logger.error("Can't send alert");
+            logger.error(e.getMessage());
+        }
+
 
         if (uplinks.size() == 0){
             if (after != null) {
