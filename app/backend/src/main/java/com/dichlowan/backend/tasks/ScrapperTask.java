@@ -1,5 +1,6 @@
 package com.dichlowan.backend.tasks;
 
+import com.dichlowan.backend.configuration.DichlowanProperties;
 import com.dichlowan.backend.service.ScrapperService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,8 @@ public class ScrapperTask {
     @Autowired
     ScrapperService scrapperService;
 
-    // @Scheduled(initialDelay = 10000, fixedRate = 10000)
-    @Scheduled(initialDelay = 60000, fixedRate = 600000)
+    // @Scheduled(initialDelay = 60000, fixedRate = 600000)
+    @Scheduled(initialDelayString = "${dichlowan.scrapper.initialDelay}", fixedRateString = "${dichlowan.scrapper.fixedRate}")
     public void scapperTask() {
         scrapperService.scrap();
         logger.info("Scrapper task performed");
