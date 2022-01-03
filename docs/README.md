@@ -10,6 +10,9 @@
     + [Exemple de programme pour les capteurs](LoraEnvironment.md#exemple)
 - [Réseau IoT](./Network.md)
 
+---
+[Fonctionnalités de notre app](docs/Features.md)
+
 ## Liens
 [FabMSTIC](FabMSTIC.md)
 

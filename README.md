@@ -15,4 +15,4 @@ Ce projet consiste en la mise en place d'un réseau de capteur de dichlorométha
 ## [Documentation des capteurs](capteur/README.md)
 
 ## [Documentation de l'application](app/README.md)
-
+- [Fonctionnalités](docs/Features.md)
