@@ -12,7 +12,7 @@ function App() {
         <div className="col-span-2">
           <RenderedChart accuracy="weekly"/>
         </div>
-        <div className="col-span-2 col-start-2">
+        <div className="col-span-2 col-start-2 relative -top-12">
           <RenderedChart accuracy="monthly"/>
         </div>
       </div>
