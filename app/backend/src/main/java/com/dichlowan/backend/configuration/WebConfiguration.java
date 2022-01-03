@@ -6,6 +6,8 @@ import org.springframework.web.method.HandlerTypePredicate;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 class WebMvcConfig implements WebMvcConfigurer {
@@ -20,4 +22,12 @@ class WebMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("forward:/swagger-ui.html");
     }
 
+    @Value("${dichlowan.cors.allowed-origins}")
+    private String myAllowedApi;
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedMethods("GET", "POST", "PUT", "DELETE").allowedOrigins("http://localhost:3000");
+    }
 }
