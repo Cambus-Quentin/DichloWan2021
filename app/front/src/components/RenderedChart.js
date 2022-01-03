@@ -32,12 +32,8 @@ const RenderedChart = (props) => {
         splitDateString = dateAfter.split('-')
         const dateStringAfter = splitDateString[0] + '-' + splitDateString[1] + '-' + splitDateString[2] + 'T00:00:00Z'
 
-        const data = await fetch("http://127.0.0.1:8080/api/v1/uplink/date", {
-            method: 'POST',
-            body: {
-                a: dateString,
-                b: dateStringAfter
-            }
+        const data = await fetch(`http://127.0.0.1:8080/api/v1/uplink/date?a=${dateString}&b=${dateStringAfter}`, {
+            method: 'GET',
         })
 
         const data_json = await data.json()
@@ -45,10 +41,10 @@ const RenderedChart = (props) => {
             let received
 
             if (accuracy === "daily") {
-                received = moment(elt["receivedAt"]).add(1, 'hour').format("hh:mm")
+                received = moment(elt["receivedAt"]).subtract(1, 'h').format("hh:mm")
             }
             else {
-                received = moment(elt["receivedAt"]).add(1, 'hour').format("DD/MM/YYYY")
+                received = moment(elt["receivedAt"]).subtract(1, 'h').format("DD/MM/YYYY")
             }
 
             elt["receivedAt"] = received
@@ -75,7 +71,7 @@ const RenderedChart = (props) => {
         <div className="mt-8 mb-8 mr-8 flex flex-col justify-center items-center" >
             <p className="text-3xl mb-2 font-sans font-semibold text-blue-600">Détail {translate[props.accuracy]}</p>
             <input ref={inputRef} type="date" onChange={handleDateChange} className="mb-2" />
-            {/* <Chart data={data} /> */}
+            <Chart data={data} />
         </div>
     )
 
