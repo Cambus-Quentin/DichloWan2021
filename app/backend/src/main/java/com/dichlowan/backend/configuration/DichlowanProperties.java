@@ -50,6 +50,10 @@ public class DichlowanProperties {
     }
     private Mail mail;
 
+    private int limit;
+
+    private String frontUrl;
+
     public Scrapper getScrapper() {
         return this.scrapper;
     }
@@ -64,5 +68,21 @@ public class DichlowanProperties {
 
     public void setMail(Mail mail) {
         this.mail = mail;
+    }
+
+    public int getLimit() {
+        return this.limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public String getFrontUrl() {
+        return frontUrl;
+    }
+
+    public void setFrontUrl(String frontUrl) {
+        this.frontUrl = frontUrl;
     }
 }
